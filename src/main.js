@@ -28,6 +28,7 @@ const onSubmit = e => {
     iziToast.error({
       message:
         'Sorry, there are no images matching your search query. Please try again!',
+      position: 'topRight',
     });
     return;
   }
