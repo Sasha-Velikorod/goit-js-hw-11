@@ -4,27 +4,18 @@ import {
   clearGallery,
   showLoader,
   hideLoader,
-  createLightBox,
 } from './js/render-functions';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-const refs = {
-  form: document.querySelector('.form'),
-  gallery: document.querySelector('.gallery'),
-};
+const form = document.querySelector('.form');
 
 const onSubmit = e => {
   e.preventDefault();
 
-  clearGallery();
-  showLoader();
-
   const searchQuery = e.target.elements['search-text'].value.trim();
 
   if (searchQuery === '') {
-    hideLoader();
-
     iziToast.error({
       message:
         'Sorry, there are no images matching your search query. Please try again!',
@@ -32,9 +23,13 @@ const onSubmit = e => {
     });
     return;
   }
+
+  clearGallery();
+  showLoader();
+
   getImagesByQuery(searchQuery)
     .then(data => {
-      if (data.hits.length === 0) {
+      if (!data.length) {
         iziToast.error({
           message:
             'Sorry, there are no images matching your search query. Please try again!',
@@ -42,11 +37,11 @@ const onSubmit = e => {
         });
         return;
       }
-      refs.gallery.innerHTML = createGallery(data.hits);
-      createLightBox();
+
+      createGallery(data);
     })
     .catch(err => console.log(err))
     .finally(() => hideLoader());
 };
 
-refs.form.addEventListener('submit', onSubmit);
+form.addEventListener('submit', onSubmit);

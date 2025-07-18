@@ -14,7 +14,7 @@ export function getImagesByQuery(query) {
 
   return axios
     .get(BASE_URL, { params })
-    .then(response => response.data)
+    .then(response => response.data.hits)
     .catch(error => {
       console.log(error);
       throw error;
