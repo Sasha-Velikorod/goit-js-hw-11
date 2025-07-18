@@ -22,7 +22,7 @@ const onSubmit = e => {
 
   const searchQuery = e.target.elements['search-text'].value.trim();
 
-  if (searchQuery === '' || searchQuery.length === 0) {
+  if (searchQuery === '') {
     hideLoader();
 
     iziToast.error({
